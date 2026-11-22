@@ -3,7 +3,6 @@
 const $ = id => document.getElementById(id);
 const modos = [1, 2, 4];
 const nomes = {1: 'Uma palavra', 2: 'Duas palavras', 4: 'Quatro palavras'};
-const textos = {1: 'Descubra a palavra de cinco letras.', 2: 'Um palpite vale para os dois tabuleiros.', 4: 'Um palpite vale para os quatro tabuleiros.'};
 const significado = {certa: 'posição certa', perto: 'outra posição', fora: 'letra ausente'};
 const codigo = 'giroletra.v1.';
 const vazio = () => Array(5).fill('');
@@ -52,8 +51,6 @@ function selecionar(numero, atualizarUrl = true) {
     url.searchParams.set('modo', numero);
     try { history.replaceState(null, '', url); } catch { /* Arquivo aberto localmente. */ }
   }
-  $('nome-modo').textContent = nomes[modo];
-  $('instrucao').textContent = textos[modo];
   document.querySelectorAll('.modo').forEach(botao => botao.setAttribute('aria-pressed', String(Number(botao.dataset.modo) === numero)));
   avisar('');
   atualizar();
@@ -63,8 +60,7 @@ function criarModos() {
     const botao = document.createElement('button');
     botao.className = 'modo';
     botao.dataset.modo = numero;
-    const blocos = '<i></i>'.repeat(numero);
-    botao.innerHTML = '<span aria-hidden="true" class="mini ' + (numero === 1 ? 'um' : '') + '">' + blocos + '</span><span><strong>' + nomes[numero] + '</strong><small>' + Giro.limites[numero] + ' tentativas</small></span>';
+    botao.textContent = numero === 1 ? '1 palavra' : numero + ' palavras';
     botao.addEventListener('click', () => selecionar(numero));
     $('modos').append(botao);
   }
@@ -77,7 +73,9 @@ function criarTeclado() {
       const botao = document.createElement('button');
       botao.className = 'tecla';
       botao.dataset.tecla = tecla;
-      botao.textContent = tecla === 'APAGAR' ? '⌫' : tecla === 'ENTER' ? 'Enviar' : tecla;
+      const rotulo = document.createElement('span');
+      rotulo.textContent = tecla === 'APAGAR' ? '⌫' : tecla === 'ENTER' ? 'Enviar' : tecla;
+      botao.append(rotulo);
       if (tecla.length > 1) botao.classList.add('especial');
       if (tecla === 'ENTER') botao.classList.add('enviar');
       botao.setAttribute('aria-label', tecla === 'APAGAR' ? 'Apagar letra' : tecla === 'ENTER' ? 'Enviar palpite' : tecla);
@@ -97,7 +95,6 @@ function atualizar(animar = false) {
   const fim = Giro.resultado(partida.rodada);
   const limite = Giro.limites[modo];
   $('tentativa').textContent = fim ? (fim === 'ganhou' ? 'Rodada vencida' : 'Rodada encerrada') : 'Tentativa ' + (palpites.length + 1) + ' de ' + limite;
-  $('pontos').innerHTML = Array.from({length: limite}, (_, i) => '<i class="' + (i < palpites.length ? 'usado' : i === palpites.length && !fim ? 'atual' : '') + '"></i>').join('');
   const quadros = [];
   const pistasPorQuadro = [];
   for (const [indice, alvo] of alvos.entries()) {

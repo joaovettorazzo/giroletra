@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#163e34">
+  <meta name="theme-color" content="#201a27">
   <meta name="description" content="Descubra uma, duas ou quatro palavras de cinco letras. Jogue quantas rodadas quiser.">
   <title>Giroletra · Jogo de palavras</title>
   <link rel="icon" href="icon.svg" type="image/svg+xml">
@@ -14,35 +14,23 @@
 </head>
 <body>
 <header class="topo"><div class="faixa">
-  <div class="marca"><img src="icon.svg" alt="" width="42" height="42"><span>Giroletra</span></div>
+  <div class="marca"><img src="icon.svg" alt="" width="38" height="38"><h1>Giroletra</h1></div>
+  <div id="modos" role="group" aria-label="Modo de jogo"></div>
   <nav aria-label="Ferramentas do jogo">
-    <button id="ajuda"><span class="icone-ajuda" aria-hidden="true">?</span><span>Como jogar</span></button>
-    <button id="estatisticas"><span class="barras" aria-hidden="true"><i></i><i></i><i></i></span><span>Estatísticas</span></button>
+    <button id="ajuda" aria-label="Como jogar" title="Como jogar"><span class="icone-ajuda" aria-hidden="true">?</span></button>
+    <button id="estatisticas" aria-label="Estatísticas" title="Estatísticas"><span class="barras" aria-hidden="true"><i></i><i></i><i></i></span></button>
   </nav>
 </div></header>
 <main>
-  <div class="titulo">
-    <div><h1 id="nome-modo">Uma palavra</h1><p id="instrucao">Descubra a palavra de cinco letras.</p></div>
-    <button id="nova" class="acao"><span aria-hidden="true" class="girar">⟳</span> Nova rodada</button>
+  <div class="andamento">
+    <span id="tentativa"></span>
+    <button id="nova" class="acao">Nova rodada</button>
   </div>
-  <div class="layout">
-    <section class="jogo" aria-label="Partida">
-      <div class="papel">
-        <div class="andamento"><span id="tentativa"></span><span id="pontos" aria-hidden="true"></span></div>
-        <div id="tabuleiros"></div>
-      </div>
-      <div id="teclado" role="group" aria-label="Teclado virtual"></div>
-      <p id="mensagem" role="status" aria-live="polite"></p>
-    </section>
-    <aside>
-      <section class="modos"><h2>Modo de jogo</h2><div id="modos" role="group" aria-label="Número de palavras"></div></section>
-      <section class="legenda"><h2>Pistas das letras</h2>
-        <div><b class="amostra certa">A</b><span>Posição certa</span></div>
-        <div><b class="amostra perto">B</b><span>Outra posição</span></div>
-        <div><b class="amostra fora">C</b><span>Letra ausente</span></div>
-      </section>
-    </aside>
-  </div>
+  <section class="jogo" aria-label="Partida">
+    <div id="tabuleiros"></div>
+    <p id="mensagem" role="status" aria-live="polite"></p>
+    <div id="teclado" role="group" aria-label="Teclado virtual"></div>
+  </section>
 </main>
 <dialog id="modal" aria-labelledby="assunto"><div class="cab-modal"><h2 id="assunto"></h2><button id="fechar" aria-label="Fechar">×</button></div><div id="conteudo"></div></dialog>
 <noscript>Ative o JavaScript no navegador para jogar.</noscript>
